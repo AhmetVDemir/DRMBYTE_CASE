@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+
+<div class="container">
+    
+    
+    <div class="d-flex justify-content-center row">
+
+       <form class="border border-dark" method="post" asp-action="Index" asp-controller="Home">
+           <div class="form-group justify-content-center">
+               <input type="text" name="Email" class="form-control" placeholder="E-Mail" />
+               <input type="password" name="Password" class="form-control" placeholder="Password" />
+               <button type="submit" class="btn btn-outline-primary">Giriş</button>
+
+           </div>
+       </form>
+
+    </div>
+    
+</div>

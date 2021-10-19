@@ -1,0 +1,133 @@
+﻿
+<div class="container">
+    <div class="row d-flex justify-content-between">
+
+        <div class="col-8">
+            <div class="d-flex justify-content-center row">
+
+
+                <table class="table border border-success">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Ürün Adı</th>
+                            <th>Birim Fiyatı</th>
+                            <th>Stok Adedi</th>
+                            <th>Türü</th>
+                            <th>Markası</th>
+                            <th>Sepet</th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+
+                        </tr>
+                    </thead>
+                    <form method="post" id="Anaform">
+                    <tbody>
+
+
+                        @foreach (var m in ViewBag.Sonuclar as List<Product>)
+                        {
+
+                        <tr>
+                            <td>@m.ProductId</td>
+                            <td>@m.ProductName</td>
+                            <td>@m.UnitPrice</td>
+                            <td>@m.UnitInStock</td>
+                            <td>@m.ProductType</td>
+                            <td>@m.Brand</td>
+                            <td>
+                                <button data-toggle="modal" data-target="#sepet" type="button" onclick="sepetArtir(@m.ProductId)" class="btn btn-success">Sepete Ekle</button>
+
+                            </td>
+                            <td>
+                                <button type="submit" name="ProductId" value="@m.ProductId" asp-action="UpdateProduct" asp-controller="Urunler" class="btn btn-warning">Güncelle</button>
+
+                            </td>
+                            <td>
+                                <button data-toggle="modal" data-target="#sil" type="button" onclick="DegerAl(@m.ProductId)" class="btn btn-danger">Sil</button>
+
+                            </td>
+                        </tr>
+
+                           
+
+                        }
+
+                    </tbody>
+                    </form>
+                </table>
+
+            </div>
+        </div>
+        <div class="col-2">
+            
+            <a class="btn btn-success" asp-action="AddProduct" asp-controller="Urunler" >Ürün EKle</a>
+
+        </div>
+    </div>
+
+    <script>
+
+
+        var cartpid = 0;
+
+        function sepetArtir(UrunId) {
+           
+            cartpid = UrunId;
+
+        }
+
+        function sepetPost() {
+            var urlCart = "https://localhost:44362/UserInterface/Urunler/Cart/?Id=" + cartpid;
+            cartpid = 0;
+            window.location = urlCart;
+        }
+        
+
+        //---------------------------------------------------------------------------------------------------
+        var x = 0; 
+        function DegerAl(id) {
+            x = id;
+        } 
+
+        function DelPost() {
+            var url = "https://localhost:44362/UserInterface/Urunler/DelProduct/?Id=" + x;
+            x = 0;
+            window.location = url;
+        }
+        //---------------------------------------------------------------------------------------------------
+    </script>
+   
+    <div class="modal" id="sil">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"> <h2 class="text-warning"> Silme Onayı</h2> </div>
+            <div class="modal-body">
+                <h5> Seçilen ürünü silmek istediğinizden emin misiniz ?</h5><br />
+                <div class="flex-row">
+                    <form method="post">
+                    <button type="button" onclick="DelPost()" class="btn btn-danger" asp-action="DelProduct" asp-controller="Urunler"> Sil </button>
+                    <button type="button" data-target="#sil" data-toggle="modal" onclick="$('#sil').hide()" class="btn btn-info">Vazgeç</button>
+                    </form>
+
+                </div>
+                
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal" id="sepet">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"> <h2 class="text-warning"> Kart Bilgisi </h2> </div>
+                <div class="modal-body">
+
+                    <h5 class="text-success"> Spete ekleme işlemi başarılı  </h5> <br />
+                    <div class="d-flex justify-content-center"> <button type="button"  class="btn btn-primary" asp-action="Cart" asp-controller="Urunler" onclick="sepetPost()">Tamam</button> </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model Product
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-8">
+            <div class="d-flex justify-content-center row">
+                <table class="table border border-success">
+                    <thead class="thead-dark border-info">
+                        <tr>
+                            <th>Eski Değer</th>
+                            <th>Güncellenecek Değer</th>
+                        </tr>
+                    </thead>
+                    <form method="post" asp-action="UpdateSuccess" asp-controller="Urunler">
+                    <tbody class="table-bordered">
+                        <tr>
+                            <td>
+                                <input type="hidden" value="@ViewBag.Sonuc.ProductId" asp-for="ProductId" />
+                                <label>  @ViewBag.Sonuc.ProductId </label>
+                            </td>
+                            <td>
+                                <label> @ViewBag.Sonuc.ProductId </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="text-danger"> @ViewBag.Sonuc.ProductName </label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-text text-success" asp-for="ProductName" placeholder="Yeni İsim" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="text-danger"> @ViewBag.Sonuc.UnitPrice </label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-text text-success" asp-for="UnitPrice" placeholder="Yeni Fiyatı" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="text-danger"> @ViewBag.Sonuc.UnitInStock </label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-text text-success" asp-for="UnitInStock" placeholder="Yeni Stok Adedi" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="text-danger"> @ViewBag.Sonuc.ProductType </label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-text text-success" asp-for="ProductType" placeholder="Yeni Tip" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="text-danger"> @ViewBag.Sonuc.Brand </label>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-text text-success" asp-for="Brand" placeholder="Yeni Markası" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" class="btn btn-warning">Günccelle</button>
+                            </td>
+                        </tr>
+                        
+
+                    </tbody>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

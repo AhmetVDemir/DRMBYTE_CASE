@@ -1,0 +1,120 @@
+﻿@using DataAccess
+@{
+    UnitOfWork UOW = new UnitOfWork(new MarketContext());
+
+    }
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-8">
+            <div class="d-flex justify-content-center row">
+
+
+                <table class="table border border-success">
+                    <thead class="thead-dark">
+                        <tr>
+
+                            <th>#</th>
+                            <th>Ürün (id + ismi)</th>
+                            <th>Adet</th>
+                            <th>Kullanıcı</th>
+                            <th>Fiyat</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <form method="post" id="SalesAnaform">
+                    <tbody>
+
+
+                        @foreach (var m in ViewBag.KartListesi as List<Cart>)
+                        {
+
+                            <tr>
+                                <td>@m.Id</td>
+                                <td>@m.ProductId </td>
+                                <td>@m.Quantity</td>
+                                <td>@UOW.UserRepostory.GetById(m.UserId).Fullname.ToString()</td>
+                                <td>@m.TotalPrice </td>
+                                <td>
+                                    <button data-toggle="modal" data-target="#sil" type="button" onclick="DegerAl(@m.Id)" class="btn btn-danger">Sepetten Sil</button>
+
+                                </td>
+                            </tr>
+
+
+                        }
+                       
+
+                        
+                        <tr>
+                            <td colspan="6">
+                                
+                                <form id="radioform" method="post">
+                                    <div class="form-check d-sm-flex">
+                                        <div class="form-control justify-content-center">
+                                            @Html.RadioButton("Odeme", "KrediKarti",true) Kredi Kartı
+                                        </div>
+                                        <div class="form-control justify-content-center">
+                                            @Html.RadioButton("Odeme", "Nakit") Nakit
+                                        </div>
+                                        <div class="form-control justify-content-center">
+                                            @Html.RadioButton("Odeme", "Dijital Pay") Dijital Pay
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <input type="submit" asp-action="Tamamla" asp-controller="Urunler" value="Tamamla" class="btn btn-primary" />
+                                </form>
+                            </td>
+                        </tr>
+                        
+
+                    </tbody>
+                    </form>
+                </table>
+
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        var x = 0;
+        function DegerAl(id) {
+            x = id;
+        }
+
+        function DelPost() {
+            var url = "https://localhost:44362/UserInterface/Urunler/Cikar/?Id=" + x;
+            x = 0;
+            window.location = url;
+        }
+
+        //---------------------------------------------------------------------------------------------------
+    </script>
+
+    <div class="modal" id="sil">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"> <h2 class="text-warning"> Silme Onayı</h2> </div>
+                <div class="modal-body">
+                    <h5> Seçilen ürünü silmek istediğinizden emin misiniz ?</h5><br />
+                    <div class="flex-row">
+                        <form method="post">
+                            <button type="button" onclick="DelPost()" class="btn btn-danger"> Çıkar </button>
+
+                            <button type="button" data-target="#sil" data-toggle="modal" onclick="$('#sil').hide()" class="btn btn-info">Vazgeç</button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
